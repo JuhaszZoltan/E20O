@@ -60,8 +60,7 @@ namespace ADFGVXgui
             foreach (var c in Kodtabla) if (c != '\0') ks += c;
 
             foreach (var v in valid)
-            {
-                
+            { 
                 //TODO: SZAR AZ EGÉSZ!
                 foreach (var kc in ks)
                 {
