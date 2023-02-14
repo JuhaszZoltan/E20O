@@ -97,9 +97,9 @@
         #endregion
 
         private Label guiLabel01;
+        private Label guiLabel02;
         private Button loadButton;
         private RichTextBox checkRichTextBox;
         private Panel mainPanel;
-        private Label guiLabel02;
     }
 }

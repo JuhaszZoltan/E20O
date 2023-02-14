@@ -5,6 +5,7 @@ namespace ADFGVXgui
     public partial class MainForm : Form
     {
         public char[,] Kodtabla { get; set; }
+        private static string valid = "abcdefghijklmnopqrstuvwxyz0123456789";
 
         public MainForm()
         {
@@ -34,7 +35,75 @@ namespace ADFGVXgui
                     si++;
                 }
                 KodtablaBetoltese();
+                KodtablaEllenorzese();
             }
+        }
+
+        private void KodtablaEllenorzese()
+        {
+            checkRichTextBox.Clear();
+            bool meret = JoMeret();
+            bool karakterek = MegfeleloKarakterek();
+            bool pontegyszer = PontosanEgyszerSzerepelMinden();
+
+            if (meret & karakterek & pontegyszer)
+            {
+                checkRichTextBox.Text += "A mátrix megfelelõ!\n";
+            }
+
+        }
+
+        private bool PontosanEgyszerSzerepelMinden()
+        {
+            bool peszm = true;
+            string ks = string.Empty;
+            foreach (var c in Kodtabla) if (c != '\0') ks += c;
+
+            foreach (var v in valid)
+            {
+                
+                //TODO: SZAR AZ EGÉSZ!
+                foreach (var kc in ks)
+                {
+                    int cc = valid.Count(x => x == v);
+                    if (cc != 1)
+                    {
+                        peszm = false;
+                        checkRichTextBox.Text += $"A(z) karakter {cc}x szerepel a mátrixban!\n";
+                    }
+                }
+            }
+            return peszm;
+        }
+
+        private bool MegfeleloKarakterek()
+        {
+            bool megfelelo = true;
+            foreach (var c in Kodtabla)
+            {
+                if (!valid.Contains(c) && c != '\0')
+                {
+                    checkRichTextBox.Text += $"hibás karakter ({c}) a mátrixban!\n";
+                    megfelelo = false;
+                }
+            }
+            return megfelelo;
+        }
+
+        private bool JoMeret()
+        {
+            for (int s = 0; s < Kodtabla.GetLength(0); s++)
+            {
+                for (int o = 0; o < Kodtabla.GetLength(1); o++)
+                {
+                    if (Kodtabla[s, o] == '\0')
+                    {
+                        checkRichTextBox.Text += "Hiba a mátrix méretében!\n";
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
 
         private void KodtablaBetoltese()
